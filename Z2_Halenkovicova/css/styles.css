@@ -1,0 +1,220 @@
+:root{
+    --color-header: #58135E;
+    --color-background: #FBE0FF;
+    --color-highlights: #FF0630;
+    --bg: #fafaf8;
+    --surface: #fff;
+    --border: #e2e2dd;
+    --text: #1c1c1a;
+    --muted: #6b6b66;
+    --accent: #2a7a4b;
+    --radius: 10px;
+    --gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+/*HEADER*/
+
+header{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    height: 50px;
+    z-index: 99;
+    padding: 3px;
+    background-color: var(--color-header);
+    align-content: center;
+}
+
+header ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 10px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+header ul li{
+    padding: 10px;
+}
+
+header img{
+    max-width: 25px;
+    background-color: var(--color-background);
+    border-radius: 50%;
+    padding: 2px;
+    padding-left: 4px;
+}
+
+header ul li a:hover, header ul li a:active{
+    color: var(--color-highlights);
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    background-color: var(--color-background);
+}
+
+/*CLASSES*/
+
+.header-text{
+    color: var(--color-background);
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+/* ─── base ──────────────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: var(--gap);
+  background: var(--bg);
+  color: var(--text);
+  font: 400 clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem)/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* ─── page shell ────────────────────────────────────────────────────────── */
+
+#menu-root {
+  max-width: 1200px;
+  margin-inline: auto;
+  display: grid;
+  gap: calc(var(--gap) * 1.5);
+}
+
+.restaurant {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--gap);
+}
+
+.restaurant h2 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.15rem, 1rem + 0.8vw, 1.6rem);
+  line-height: 1.2;
+}
+
+.restaurant-link {
+  display: inline-block;
+  margin-bottom: var(--gap);
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.restaurant-link:hover { text-decoration: underline; }
+
+/* ─── day grid: 1 col on phones, up to 4 on wide screens ────────────────── */
+
+.days {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+
+.day {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;               /* lets long words wrap instead of overflowing */
+}
+
+.day--today {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.day h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+
+/* ─── dishes ────────────────────────────────────────────────────────────── */
+
+.dishes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.dishes li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+.dishes li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.dish-name {
+  grid-column: 1;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+.dish-price {
+  grid-column: 2;
+  grid-row: 1;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dish-category,
+.dish-allergens {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.closed, .empty, .error { margin: 0; font-size: 0.9rem; }
+.closed { color: var(--muted); font-style: italic; }
+.error  { color: #a3241c; }
+
+/* ─── wide screens: give the day cards a bit more breathing room ────────── */
+
+@media (min-width: 900px) {
+  body { padding: calc(var(--gap) * 1.5); }
+  .day { padding: 1rem; }
+}
+
+/* ─── reduced motion / dark mode, both optional but cheap ───────────────── */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17171a;
+    --surface: #1f1f23;
+    --border: #33333a;
+    --text: #ececea;
+    --muted: #9a9a95;
+    --accent: #5fbf87;
+  }
+  .error { color: #ff8a80; }
+}
